@@ -1,0 +1,9 @@
+{% extends 'money_tracker/base.html' %}
+
+{% block body_block %}
+ <form method="POST" action="{% url 'new_category' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Add category">
+ </form>
+{% endblock %}

@@ -1,0 +1,28 @@
+label{
+    font-size: 1.2rem;
+}
+
+.header{
+    font-size: 3.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.form-control{
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    padding: 0.3rem;
+}
+
+.next_to_login_text{
+    margin-bottom: 2rem;
+}
+
+.form__content{
+    margin: 3rem auto 0 auto;
+    width: 40%
+}
+
+.errorlist{
+    display: none;
+}

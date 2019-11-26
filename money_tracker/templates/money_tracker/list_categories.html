@@ -1,0 +1,16 @@
+{% extends 'money_tracker/base.html' %}
+
+{% block body_block %}
+    EXPENSE
+    <ul>
+    {% for obj in object_list %}
+        <li>{{obj}}</li>
+    {% endfor %}
+    </ul>
+    INCOME
+    <ul>
+    {% for obj in income_list %}
+        <li>{{obj}}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
