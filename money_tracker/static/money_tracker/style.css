@@ -28,3 +28,39 @@ html {
     margin-top: 1rem;
 }
 
+
+
+.header{
+    font-size: 3rem;
+    text-align: center;
+}
+
+.smaller__header{
+    font-size: 2rem;
+    text-align: center;
+}
+
+.income_expense{
+    float: left;
+    width: 50%;
+    text-align: center;
+    margin-top: 3rem;
+    padding-bottom: 100%;
+    margin-bottom: -100%;
+}
+
+.balance__sheet{
+    width: 70%;
+    margin: 5% auto 0 auto;
+    overflow: hidden;
+}
+
+.list_of_transactions{
+    text-align: left;
+}
+
+.add_transaction{
+    float: left;
+    text-align: center;
+    width: 50%;
+}

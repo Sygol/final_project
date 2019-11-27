@@ -1,14 +1,40 @@
 {% extends 'money_tracker/base.html' %}
 
 {% block body_block %}
-    Month:
-    {{ month }}
-    Your balance:
-    {{ balance }}
-    Income:
-    {{ income }}
-    Expense:
-    {{ expense }}
+    <section class="balance section">
+        <div class="balance__sheet">
+            <h3 class="header">{{ month }} {{year}}</h3>
+            <div>
+                <h4 class="smaller__header">Balance: {{balance}}$</h4>
+            </div>
+            <div class="income_expense">
+                Income: {{income}}$
+                <div class="list_of_transactions">
+                    {% for trans in income_transaction %}
+                        <li>{{trans.amount}} {{trans.date}} {{trans.category}} </li>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="income_expense">
+                Expense: {{expense}}$
+                <div class="list_of_transactions">
+                  <ul>
+                    {% for trans in expense_transaction %}
+                        <li>{{trans.amount}}$, {{trans.date}}, {{trans.category}}, edit, delete</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
 
+            <div class="add_transaction">
+                <a href="#"><button>Add income</button></a>
+            </div>
+            <div class="add_transaction">
+                <a href="#"><button>Add expense</button></a>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </section>
 
 {% endblock %}
