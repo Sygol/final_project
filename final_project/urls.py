@@ -18,7 +18,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
 from accounts.views import RegistrationView
-from money_tracker.views import IndexView, CategoryFormView, UserCategoriesView, BalanceView, AddExpenseView
+from money_tracker.views import IndexView, CategoryFormView, UserCategoriesView, BalanceView, AddExpenseView, \
+    AddIncomeView, DeleteTransactionView, UpdateExpenseView, UpdateIncomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +31,8 @@ urlpatterns = [
     path('categories', UserCategoriesView.as_view(), name='categories'),
     path('balance', BalanceView.as_view(), name='balance'),
     path('newexpense', AddExpenseView.as_view(), name='add_expense'),
+    path('newincome', AddIncomeView.as_view(), name='add_income'),
+    path('delete/<int:pk>', DeleteTransactionView.as_view(), name='delete_transaction'),
+    path('update/expense/<int:pk>', UpdateExpenseView.as_view(), name='update_expense'),
+    path('update/income/<int:pk>', UpdateIncomeView.as_view(), name='update_income'),
 ]

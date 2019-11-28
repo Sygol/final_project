@@ -11,7 +11,7 @@
                 Income: {{income}}$
                 <div class="list_of_transactions">
                     {% for trans in income_transaction %}
-                        <li>{{trans.amount}} {{trans.date}} {{trans.category}} </li>
+                        <li>{{trans.amount}} {{trans.date}} {{trans.category}}, <a href="{% url 'update_income' trans.pk %}">edit,</a> <a href="{% url 'delete_transaction' trans.pk %}">delete</a> </li>
                     {% endfor %}
                 </div>
             </div>
@@ -20,7 +20,7 @@
                 <div class="list_of_transactions">
                   <ul>
                     {% for trans in expense_transaction %}
-                        <li>{{trans.amount}}$, {{trans.date}}, {{trans.category}}, edit, delete</li>
+                        <li>{{trans.amount}}$, {{trans.date}}, {{trans.category}}, <a href="{% url 'update_expense' trans.pk %}">edit,</a><a href="{% url 'delete_transaction' trans.pk %}">delete</a></li>
                     {% endfor %}
                   </ul>
                 </div>
@@ -28,10 +28,10 @@
             <div style="clear:both;"></div>
 
             <div class="add_transaction">
-                <a href="#"><button>Add income</button></a>
+                <a href="{% url 'add_income' %}"><button>Add income</button></a>
             </div>
             <div class="add_transaction">
-                <a href="#"><button>Add expense</button></a>
+                <a href="{% url 'add_expense' %}"><button>Add expense</button></a>
             </div>
             <div style="clear:both;"></div>
         </div>
