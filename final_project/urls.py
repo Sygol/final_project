@@ -19,7 +19,8 @@ from django.urls import path
 
 from accounts.views import RegistrationView
 from money_tracker.views import IndexView, CategoryFormView, UserCategoriesView, BalanceView, AddExpenseView, \
-    AddIncomeView, DeleteTransactionView, UpdateExpenseView, UpdateIncomeView
+    AddIncomeView, DeleteTransactionView, UpdateExpenseView, UpdateIncomeView, check_balance, TransactionsView, \
+    check_transactions
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,4 +36,7 @@ urlpatterns = [
     path('delete/<int:pk>', DeleteTransactionView.as_view(), name='delete_transaction'),
     path('update/expense/<int:pk>', UpdateExpenseView.as_view(), name='update_expense'),
     path('update/income/<int:pk>', UpdateIncomeView.as_view(), name='update_income'),
+    path('check_balance', check_balance, name='check_balance'),
+    path('transactions', TransactionsView.as_view(), name='transactions'),
+    path('check_transactions', check_transactions, name='check_transactions'),
 ]

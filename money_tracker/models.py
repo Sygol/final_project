@@ -22,6 +22,7 @@ class Category(models.Model):
     created = models.DateTimeField(editable=False, default=timezone.now())
     modified = models.DateTimeField(default=timezone.now())
 
+
     def __str__(self):
         return self.name
 
@@ -30,30 +31,6 @@ class Category(models.Model):
             self.created = timezone.now()
         self.modified = timezone.now()
         return super(Category, self).save(*args, **kwargs)
-
-
-# class UserCategory(models.Model):
-#     INCOME = 'INCOME'
-#     EXPENSE = 'EXPENSE'
-#     EXPENSE_OR_INCOME_CHOICES = [
-#         (INCOME, 'Income'),
-#         (EXPENSE, 'Expense'),
-#     ]
-#     name = models.CharField(max_length=32, verbose_name=_('Category name'))
-#     user = models.ForeignKey('accounts.CustomUser', related_name='user_categories', on_delete=models.CASCADE, verbose_name=_('User'))
-#     expense_or_income_choices = models.CharField(max_length=9, choices=EXPENSE_OR_INCOME_CHOICES,
-#                                                  verbose_name=_('Expense or income'), default=EXPENSE)
-#     created = models.DateTimeField(editable=False, default=timezone.now())
-#     modified = models.DateTimeField(default=timezone.now())
-#
-#     def __str__(self):
-#         return f'{self.name}'
-#
-#     def save(self, *args, **kwargs):
-#         if not self.id:
-#             self.created = timezone.now()
-#         self.modified = timezone.now()
-#         return super(UserCategory, self).save(*args, **kwargs)
 
 
 class Transaction(models.Model):

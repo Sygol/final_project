@@ -1,6 +1,7 @@
 import datetime
 
 from django import forms
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.forms import DateInput
 from django.urls import reverse
@@ -18,8 +19,17 @@ class UserCategoryForm(forms.ModelForm):
         self.request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
 
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if Category.objects.filter(name__iexact=name, user=self.request.user,
+                                   expense_or_income_choices=self.cleaned_data['expense_or_income_choices']).exists() or\
+                Category.objects.filter(name=name, user=None,
+                                    expense_or_income_choices=self.cleaned_data['expense_or_income_choices']).exists():
+            raise ValidationError('This category already exists!')
+        return name
+
     def save(self, commit=True):
-        cat = Category.objects.create(user=self.request.user, name=self.cleaned_data.get('name'),
+        cat = Category.objects.create(user=self.request.user, name=self.cleaned_data.get('name').capitalize(),
                                       expense_or_income_choices=self.cleaned_data.get('expense_or_income_choices'))
         return cat
 
@@ -90,14 +100,19 @@ class UserTransactionForm(forms.ModelForm):
         self.request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
         self.is_object_created = kwargs['instance']
-        if self.request.get_full_path() == reverse('add_income') or \
-                self.request.get_full_path() == reverse('update_income', kwargs={'pk': self.is_object_created.id}):
+        try:
+            if self.request.get_full_path() == reverse('add_income') or \
+                    self.request.get_full_path() == reverse('update_income', kwargs={'pk': self.is_object_created.id}):
+                self.fields['category'].queryset = Category.objects.filter(Q(user=self.request.user,
+                                   expense_or_income_choices='INCOME') | Q(user=None, expense_or_income_choices='INCOME'))
+            elif self.request.get_full_path() == reverse('add_expense') or \
+                    self.request.get_full_path() == reverse('update_expense', kwargs={'pk': self.is_object_created.id}):
+                self.fields['category'].queryset = Category.objects.filter(Q(user=self.request.user,
+                                   expense_or_income_choices='EXPENSE') | Q(user=None, expense_or_income_choices='EXPENSE'))
+        except AttributeError:
             self.fields['category'].queryset = Category.objects.filter(Q(user=self.request.user,
-                               expense_or_income_choices='INCOME') | Q(user=None, expense_or_income_choices='INCOME'))
-        elif self.request.get_full_path() == reverse('add_expense') or \
-                self.request.get_full_path() == reverse('update_expense', kwargs={'pk': self.is_object_created.id}):
-            self.fields['category'].queryset = Category.objects.filter(Q(user=self.request.user,
-                               expense_or_income_choices='EXPENSE') | Q(user=None, expense_or_income_choices='EXPENSE'))
+                                                                         expense_or_income_choices='EXPENSE') | Q(
+                                                                        user=None, expense_or_income_choices='EXPENSE'))
 
     def save(self, commit=True):
 

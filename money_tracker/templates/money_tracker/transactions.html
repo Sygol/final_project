@@ -1,0 +1,101 @@
+{% extends 'money_tracker/base.html' %}
+{% load staticfiles %}
+{% block body_block %}
+    <section class="balance section">
+        <div class="balance__sheet">
+            <h3 class="header"><span class="arrow arrow_left">&#8678</span><span class="month">{{ month }}</span> <span class="year">{{year}}</span><span class="arrow arrow_right">&#8680</span></h3>
+            <div>
+                <h4 class="smaller__header">Balance: {{balance}}$</h4>
+            </div>
+            <div class="income_expense">
+                Income: {{income}}$
+                <div class="list_of_transactions">
+                  <ul>
+                    {% for trans in income_transaction %}
+                      <li>{{trans.category}}, {{trans.date}} - <strong>{{trans.amount}}$</strong> <a href="{% url 'update_income' trans.pk %}">
+                            <img class="img_transaction" src="{% static 'money_tracker/edit.png' %}" alt="edit"></a>
+                            <a href="{% url 'delete_transaction' trans.pk %}"><img class="img_transaction" src="{% static 'money_tracker/delete.png' %}" alt="delete"></a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+            </div>
+            <div class="income_expense">
+                Expense: {{expense}}$
+                <div class="list_of_transactions">
+                  <ul>
+                    {% for trans in expense_transaction %}
+                        <li>{{trans.category}}, {{trans.date}} - <strong>{{trans.amount}}$</strong><a href="{% url 'update_expense' trans.pk %}">
+                            <img class="img_transaction" src="{% static 'money_tracker/edit.png' %}" alt="edit"></a>
+                            <a href="{% url 'delete_transaction' trans.pk %}"><img class="img_transaction" src="{% static 'money_tracker/delete.png' %}" alt="delete"></a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+            <div class="add_transaction">
+                <a href="{% url 'add_income' %}"><button class="add_transaction__button">Add income</button></a>
+            </div>
+            <div class="add_transaction">
+                <a href="{% url 'add_expense' %}"><button class="add_transaction__button">Add expense</button></a>
+            </div>
+            <div style="clear:both;"></div>
+
+        </div>
+    </section>
+{% endblock %}
+
+{% block java_script %}
+<script>
+    function transactions_ajax(month_displayed, year_displayed){
+      $.ajax({
+        url: '{% url "check_transactions" %}',
+        data: {
+            'month': month_displayed,
+            'year': year_displayed
+        },
+        dataType: 'json',
+        success: function(data){
+            document.querySelector('.smaller__header').textContent = 'Balance: ' + data['balance'] + '$';
+            document.querySelectorAll('.income_expense')[0].childNodes[0].textContent = 'Income: ' + data['income'] + '$';
+            document.querySelectorAll('.income_expense')[1].childNodes[0].textContent = 'Expense: ' + data['expense'] + '$';
+            document.querySelectorAll('.list_of_transactions')[0].textContent="";
+            document.querySelectorAll('.list_of_transactions')[1].textContent="";
+            var ul_one, ul_two, li;
+            ul_one = document.createElement('ul');
+            ul_two = document.createElement('ul');
+            document.querySelectorAll('.list_of_transactions')[0].appendChild(ul_one);
+            document.querySelectorAll('.list_of_transactions')[1].appendChild(ul_two);
+            for (i=0; i<data['income_transactions'].length; i++){
+                li = document.createElement('li');
+                li.innerHTML = `${data['income_transactions'][i][2]}, ${data['income_transactions'][i][3]} - <strong> ${data['income_transactions'][i][1]}$ </strong>
+                  <a href="${data['url_update_income_list'][i]}"><img class="img_transaction" src="{% static 'money_tracker/edit.png' %}" alt="edit"></a>
+                  <a href="${data['url_delete_income_list'][i]}"><img class="img_transaction" src="{% static 'money_tracker/delete.png' %}" alt="delete"></a>`;
+                document.querySelectorAll('.list_of_transactions')[0].children[0].appendChild(li);
+            }
+            for (i=0; i<data['expense_transactions'].length; i++){
+                li = document.createElement('li');
+                li.innerHTML = `${data['expense_transactions'][i][2]}, ${data['expense_transactions'][i][3]} - <strong> ${data['expense_transactions'][i][1]}$ </strong>
+                  <a href="${data['url_update_expense_list'][i]}"><img class="img_transaction" src="{% static 'money_tracker/edit.png' %}" alt="edit"></a>
+                  <a href="${data['url_delete_expense_list'][i]}"><img class="img_transaction" src="{% static 'money_tracker/delete.png' %}" alt="delete"></a>`;
+                document.querySelectorAll('.list_of_transactions')[1].children[0].appendChild(li);
+            }
+        }
+      });
+    }
+
+
+    document.querySelector('.arrow_left').onclick = () => {
+        var month_year = subtractMonth();
+        month_year[0] = document.querySelector('.month').textContent;
+        month_year[1] = document.querySelector('.year').textContent;
+        transactions_ajax(month_year[0], month_year[1]);
+    }
+
+    document.querySelector('.arrow_right').onclick = () => {
+        var month_year = addMonth();
+        month_year[0] = document.querySelector('.month').textContent;
+        month_year[1] = document.querySelector('.year').textContent;
+        transactions_ajax(month_year[0], month_year[1]);
+    }
+</script>
+{% endblock %}
