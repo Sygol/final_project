@@ -18,7 +18,7 @@ class Category(models.Model):
     user = models.ForeignKey('accounts.CustomUser', related_name='user_categories', on_delete=models.CASCADE,
                              verbose_name=_('User'), null=True, blank=True)
     expense_or_income_choices = models.CharField(max_length=9, choices=EXPENSE_OR_INCOME_CHOICES,
-                                                 verbose_name=_('Expense or income'), default=EXPENSE)
+                                                 verbose_name=_('Category type'), default=EXPENSE)
     created = models.DateTimeField(editable=False, default=timezone.now())
     modified = models.DateTimeField(default=timezone.now())
 

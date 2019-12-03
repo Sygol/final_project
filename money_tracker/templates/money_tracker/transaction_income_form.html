@@ -4,6 +4,6 @@
 <form method="POST" action="{% url 'update_income' object.pk %}">
     {% csrf_token %}
     {{form.as_p}}
-    <input type="submit" value="Update income">
+    <input type="submit" class='button' value="Update income">
 </form>
 {% endblock%}

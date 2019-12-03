@@ -87,6 +87,8 @@ html {
 .list_of_transactions{
     text-align: left;
     margin-left: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 .add_transaction{
@@ -101,26 +103,45 @@ html {
 
 .span_money{
     float: right;
-    padding-right: 30%;
+    padding-right: 11%;
+    font-weight: 700;
+    text-align: right;
 }
 
 .img_transaction{
-    width:3.5%;
-    margin-bottom: .2rem;
+    width:10%;
+    margin-bottom: .3rem;
     margin-left: .5rem;
 }
 
 ul.errorlist {display:none;}
 
-.add_transaction__button{
-    width: 14vw;
-    padding: 1rem 2rem;
+.button{
+    width: 13vw;
+    padding: 0.7rem;
     border: 1px solid #666;
     border-radius: 100px;
     cursor: pointer;
     animation: all .5s ease-out;
+    background: #fff;
+    color: #666;
 }
 
-.add_transaction__button:hover{
+.button:hover{
     transform: translateY(-5px);
+}
+
+.button__input{
+    display: block;
+    margin: 3rem auto;
+}
+
+.list_of_transactions li {
+    margin-top: 0.9rem;
+}
+
+.form_section{
+   width:40%;
+   margin-left: 37.5%;
+   margin-top: 5%;
 }

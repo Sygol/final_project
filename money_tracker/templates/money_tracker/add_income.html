@@ -1,9 +1,12 @@
 {% extends 'money_tracker/base.html' %}
 
 {% block body_block %}
-<form method="POST" action="{% url 'add_income' %}">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Add income">
-</form>
+<section class="form_section">
+    <h4 class="smaller__header">New income</h4>
+    <form method="POST" action="{% url 'add_income' %}">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" class='button button__input' value="Add income">
+    </form>
+</section>
 {% endblock%}

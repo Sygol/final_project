@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DeleteView, UpdateView
 
-from money_tracker.forms import UserCategoryForm, UserExpensesForm, UserIncomeForm, UserTransactionForm
+from money_tracker.forms import UserCategoryForm, UserTransactionForm
 from money_tracker.models import Category, Transaction
 from money_tracker.scripts import range_of_current_month, month_name_to_number
 

@@ -3,12 +3,12 @@
 {% block body_block %}
     <section class="balance section">
         <div class="balance__sheet">
-            <h3 class="header"><span class="arrow arrow_left">&#8678</span><span class="month">{{ month }}</span> <span class="year">{{year}}</span><span class="arrow arrow_right">&#8680</span></h3>
+            <h3 class="header"><span class="arrow arrow_left">&#8678 </span><span class="month">{{ month }}</span> <span class="year">{{year}}</span><span class="arrow arrow_right"> &#8680</span></h3>
             <div>
                 <h4 class="smaller__header">Balance: {{balance}}$</h4>
             </div>
             <div class="income_expense">
-                Income: {{income}}$
+                <h4 class="smaller__header">Income: {{income}}$</h4>
                 <div class="list_of_transactions">
                   <ul>
                     {% for trans in income_transaction %}
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="income_expense">
-                Expense: {{expense}}$
+                <h4 class="smaller__header">Expense: {{expense}}$</h4>
                 <div class="list_of_transactions">
                   <ul>
                     {% for trans in expense_transaction %}
@@ -36,10 +36,10 @@
             <div style="clear:both;"></div>
 
             <div class="add_transaction">
-                <a href="{% url 'add_income' %}"><button class="add_transaction__button">Add income</button></a>
+                <a href="{% url 'add_income' %}"><button class="button">Add income</button></a>
             </div>
             <div class="add_transaction">
-                <a href="{% url 'add_expense' %}"><button class="add_transaction__button">Add expense</button></a>
+                <a href="{% url 'add_expense' %}"><button class="button">Add expense</button></a>
             </div>
             <div style="clear:both;"></div>
         </div>
@@ -57,22 +57,23 @@
         dataType: 'json',
         success: function(data){
             document.querySelector('.smaller__header').textContent = 'Balance: ' + data['balance'] + '$';
-            document.querySelectorAll('.income_expense')[0].childNodes[0].textContent = 'Income: ' + data['income'] + '$';
-            document.querySelectorAll('.income_expense')[1].childNodes[0].textContent = 'Expense: ' + data['expense'] + '$';
+            document.querySelectorAll('.income_expense')[0].children[0].innerHTML = '<h4 class="smaller__header">Income: ' + data['income'] + '$</h4>';
+            document.querySelectorAll('.income_expense')[1].children[0].innerHTML = '<h4 class="smaller__header">Expense: ' + data['expense'] + '$</h4>';
             document.querySelectorAll('.list_of_transactions')[0].textContent="";
             document.querySelectorAll('.list_of_transactions')[1].textContent="";
-            console.log(data['expense_transactions']);
-            var li;
+            var ul_one, ul_two, li;
+            ul_one = document.createElement('ul');
+            ul_two = document.createElement('ul');
+            document.querySelectorAll('.list_of_transactions')[0].appendChild(ul_one);
+            document.querySelectorAll('.list_of_transactions')[1].appendChild(ul_two);
             for (i=0; i<data['income_transactions'].length; i++){
                 li = document.createElement('li');
                 li.innerHTML = '<span class="span_category">'+data['income_transactions'][i][0]+'</span><span class="span_money">'+data['income_transactions'][i][1]+'$</span>';
-                document.querySelectorAll('.list_of_transactions')[0].appendChild(li);
-            }
+                document.querySelectorAll('.list_of_transactions')[0].children[0].appendChild(li);            }
             for (i=0; i<data['expense_transactions'].length; i++){
                 li = document.createElement('li');
                 li.innerHTML = '<span class="span_category">'+data['expense_transactions'][i][0]+'</span><span class="span_money">'+data['expense_transactions'][i][1]+'$</span>';
-                document.querySelectorAll('.list_of_transactions')[1].appendChild(li);
-            }
+                document.querySelectorAll('.list_of_transactions')[1].children[0].appendChild(li);            }
         }
       });
     }
