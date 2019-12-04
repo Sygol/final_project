@@ -1,5 +1,14 @@
-<form method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to delete this transaction?</p>
-    <input type="submit" class='button' value="Delete">
-</form>
+{% extends 'money_tracker/base.html' %}
+{% block body_block %}
+<section class="form_section">
+    <h2 class="header">Delete transaction</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete transaction:</p>
+        <p>Date: <strong>{{object.date}}</strong></p>
+        <p>Amount: <strong>{{object.amount}}$</strong></p>
+        <p>Category: <strong>{{ object.category }}</strong></p>
+        <input type="submit" class='button button__input' value="Delete">
+    </form>
+</section>
+{% endblock %}

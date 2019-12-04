@@ -18,7 +18,12 @@
         <a href="{% url 'balance' %}"><li class="navigation_item">Balance</li></a>
         <a href="{% url 'transactions' %}"><li class="navigation_item">Transactions</li></a>
         <a href="{% url 'categories' %}"><li class="navigation_item">Categories</li></a>
-        <a href=""><li class="navigation_item">Logout</li></a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}"><li class="navigation_item">Logout</li></a>
+        {% else %}
+            <a href="{% url 'login' %}"><li class="navigation_item">Login</li></a>
+            <a href="{% url 'registration' %}"><li class="navigation_item">Register</li></a>
+        {% endif %}
     </ul>
 </nav>
  {% block body_block %}

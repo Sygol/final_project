@@ -6,7 +6,7 @@
 
 {% block body_block %}
 
-<section class="form__content form__login">
+<section class="form_section">
     <h2 class="header">Login here</h2>
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
@@ -19,9 +19,9 @@
             <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
         </div>
 
-        <input class="btn btn-primary" type="submit" value="Login" >
+        <input class="button button__input" type="submit" value="Login" >
         <div class="next_to_login_text">
-            <small>Don't have an account? Register <a href="{% url 'registration' %}" style="color:white">here</a></small>
+            <small>Don't have an account? Register <a href="{% url 'registration' %}" style="color:white; text-decoration: underline;">here</a></small>
         </div>
         <input type="hidden" name="next" value="{{ next }}">
 

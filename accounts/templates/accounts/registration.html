@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block body_block %}
-<section class="form__content">
+<section class="form_section">
 
     <h2 class="header">Register here</h2>
     <form action="{% url 'registration' %}" method="POST">
         {% csrf_token %}
         {{form.as_p}}
-        <input class="btn btn-primary" type="submit" value="Register" >
+        <input class="button button__input" type="submit" value="Register" >
     </form>
         {% if form.errors %}
       {% for field in form %}

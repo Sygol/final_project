@@ -10,27 +10,28 @@
     <title>Money tracker</title>
 </head>
 <body>
+<h1 class="main_header">Money tracker</h1>
 <nav class="main__nav">
     <ul>
       <li>
-        Balance
+          <a href="{% url 'balance' %}">Balance</a>
       </li>
       <li>
-        Transactions
+          <a href="{% url 'transactions' %}">Transactions</a>
       </li>
       <li>
-        Categories
+          <a href="{% url 'categories' %}">Categories</a>
       </li>
       {% if user.is_authenticated %}
         <li>
-         Logout
+            <a href="{% url 'logout' %}">Logout</a>
         </li>
       {% else %}
         <li>
-         Login
+            <a href="{% url 'login' %}">Login</a>
         </li>
         <li>
-         Register
+            <a href="{% url 'registration' %}">Register</a>
         </li>
       {% endif %}
 

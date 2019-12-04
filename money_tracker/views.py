@@ -1,6 +1,7 @@
 import calendar
 from itertools import chain
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -18,10 +19,11 @@ class IndexView(TemplateView):
     template_name = 'money_tracker/index.html'
 
 
-class CategoryFormView(CreateView):
+class CategoryFormView(LoginRequiredMixin, CreateView):
     template_name = 'money_tracker/add_category.html'
     form_class = UserCategoryForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('categories')
+    login_url = '/login/'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -29,8 +31,9 @@ class CategoryFormView(CreateView):
         return kwargs
 
 
-class UserCategoriesView(ListView):
+class UserCategoriesView(LoginRequiredMixin, ListView):
     template_name = 'money_tracker/list_categories.html'
+    login_url = '/login/'
 
     def get_queryset(self):
         return Category.objects.filter(Q(user=self.request.user, expense_or_income_choices='EXPENSE') | Q(user=None,
@@ -43,8 +46,9 @@ class UserCategoriesView(ListView):
         return context
 
 
-class BalanceView(TemplateView):
+class BalanceView(LoginRequiredMixin, TemplateView):
     template_name = 'money_tracker/balance.html'
+    login_url = '/login/'
 
     def get_context_data(self, *args, **kwargs):
         month, year, month_start, month_end = range_of_current_month()
@@ -71,10 +75,11 @@ class BalanceView(TemplateView):
         return context
 
 
-class AddExpenseView(CreateView):
+class AddExpenseView(LoginRequiredMixin, CreateView):
     template_name = 'money_tracker/add_expense.html'
     form_class = UserTransactionForm
     success_url = reverse_lazy('balance')
+    login_url = '/login/'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -82,10 +87,11 @@ class AddExpenseView(CreateView):
         return kwargs
 
 
-class AddIncomeView(CreateView):
+class AddIncomeView(LoginRequiredMixin, CreateView):
     template_name = 'money_tracker/add_income.html'
     form_class = UserTransactionForm
     success_url = reverse_lazy('balance')
+    login_url = '/login/'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -93,16 +99,18 @@ class AddIncomeView(CreateView):
         return kwargs
 
 
-class DeleteTransactionView(DeleteView):
+class DeleteTransactionView(LoginRequiredMixin, DeleteView):
     model = Transaction
     success_url = reverse_lazy('balance')
+    login_url = '/login/'
 
 
-class UpdateExpenseView(UpdateView):
+class UpdateExpenseView(LoginRequiredMixin, UpdateView):
     form_class = UserTransactionForm
     model = Transaction
     success_url = reverse_lazy('balance')
     template_name_suffix = '_expense_form'
+    login_url = '/login/'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -116,11 +124,12 @@ class UpdateExpenseView(UpdateView):
         return initial
 
 
-class UpdateIncomeView(UpdateView):
+class UpdateIncomeView(LoginRequiredMixin, UpdateView):
     form_class = UserTransactionForm
     model = Transaction
     success_url = reverse_lazy('balance')
     template_name_suffix = '_income_form'
+    login_url = '/login/'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -134,8 +143,9 @@ class UpdateIncomeView(UpdateView):
         return initial
 
 
-class TransactionsView(TemplateView):
+class TransactionsView(LoginRequiredMixin, TemplateView):
     template_name = 'money_tracker/transactions.html'
+    login_url = '/login/'
 
     def get_context_data(self, *args, **kwargs):
         month, year, month_start, month_end = range_of_current_month()

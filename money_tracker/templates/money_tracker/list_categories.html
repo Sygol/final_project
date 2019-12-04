@@ -1,17 +1,31 @@
 {% extends 'money_tracker/base.html' %}
 
 {% block body_block %}
-    EXPENSE
-    <ul>
-    {% for obj in object_list %}
-        <li>{{obj}}</li>
-    {% endfor %}
-    </ul>
-    INCOME
-    <ul>
-    {% for obj in income_list %}
-        <li>{{obj}}</li>
-    {% endfor %}
-    </ul>
-    <a href="{% url 'new_category' %}"><button>Add category</button></a>
+<section class="section categories__section">
+        <h2 class="header">List of categories</h2>
+        <div class="income_expense">
+            <h4 class="smaller__header">EXPENSE</h4>
+            <div class="categories__list">
+                <ul>
+                {% for obj in object_list %}
+                    <li>{{obj}}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="income_expense">
+            <h4 class="smaller__header">INCOME</h4>
+            <div class="categories__list">
+                <ul>
+                {% for obj in income_list %}
+                    <li>{{obj}}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+        <div class="button__class">
+            <a href="{% url 'new_category' %}"><button class="button button__input">Add category</button></a>
+        </div>
+</section>
 {% endblock %}

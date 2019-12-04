@@ -2,7 +2,7 @@
 
 {% block body_block %}
 <section class="form_section">
-    <h4 class="smaller__header">New income</h4>
+    <h2 class="header">New income</h2>
     <form method="POST" action="{% url 'add_income' %}">
         {% csrf_token %}
         {{form.as_p}}
