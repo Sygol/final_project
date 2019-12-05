@@ -2,7 +2,7 @@
 
 {% block body_block %}
 <section class="form_section">
-     <h4 class="smaller__header">New category</h4>
+     <h2 class="header">New category</h2>
      <form method="POST" action="{% url 'new_category' %}" onsubmit="return checkCategoryAjax()">
         {% csrf_token %}
         {{ form.as_p }}

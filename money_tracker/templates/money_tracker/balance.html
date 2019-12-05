@@ -5,41 +5,39 @@
         <div class="balance__sheet">
             <h3 class="header"><span class="arrow arrow_left">&#8678 </span><span class="month">{{ month }}</span> <span class="year">{{year}}</span><span class="arrow arrow_right"> &#8680</span></h3>
             <div>
-                <h4 class="smaller__header">Balance: {{balance}}$</h4>
+                <h4 class="smaller__header"><i>Balance: {{balance}} <span class="span_symbol_header">{{symbol}}</span></i></h4>
             </div>
             <div class="income_expense">
-                <h4 class="smaller__header">Income: {{income}}$</h4>
+                <h4 class="smaller__header"><i>Income: {{income}} <span class="span_symbol_header">{{symbol}}</span></i></h4>
                 <div class="list_of_transactions">
                   <ul>
                     {% for trans in income_transaction %}
                     <li>
                         <span class="span_category">{{trans.0}}</span>
-                        <span class="span_money">{{trans.1}}$</span>
+                        <span class="span_money">{{trans.1}} <span class="span_symbol">{{symbol}}</span></span>
                     </li>
                     {% endfor %}
                   </ul>
                 </div>
+                <div class="add_transaction">
+                    <a href="{% url 'add_income' %}"><button class="button">Add income</button></a>
+                </div>
             </div>
             <div class="income_expense">
-                <h4 class="smaller__header">Expense: {{expense}}$</h4>
+                <h4 class="smaller__header"><i>Expense: {{expense}} <span class="span_symbol_header">{{symbol}}</span></i></h4>
                 <div class="list_of_transactions">
                   <ul>
                     {% for trans in expense_transaction %}
                     <li>
                         <span class="span_category">{{trans.0}}</span>
-                        <span class="span_money">{{trans.1}}$</span>
+                        <span class="span_money">{{trans.1}} <span class="span_symbol">{{symbol}}</span></span>
                     </li>
                     {% endfor %}
                   </ul>
                 </div>
-            </div>
-            <div style="clear:both;"></div>
-
-            <div class="add_transaction">
-                <a href="{% url 'add_income' %}"><button class="button">Add income</button></a>
-            </div>
-            <div class="add_transaction">
-                <a href="{% url 'add_expense' %}"><button class="button">Add expense</button></a>
+                <div class="add_transaction">
+                    <a href="{% url 'add_expense' %}"><button class="button">Add expense</button></a>
+                </div>
             </div>
             <div style="clear:both;"></div>
         </div>
@@ -56,9 +54,9 @@
         },
         dataType: 'json',
         success: function(data){
-            document.querySelector('.smaller__header').textContent = 'Balance: ' + data['balance'] + '$';
-            document.querySelectorAll('.income_expense')[0].children[0].innerHTML = '<h4 class="smaller__header">Income: ' + data['income'] + '$</h4>';
-            document.querySelectorAll('.income_expense')[1].children[0].innerHTML = '<h4 class="smaller__header">Expense: ' + data['expense'] + '$</h4>';
+            document.querySelector('.smaller__header').innerHTML = '<i>Balance: ' + data['balance'] + ' <span class="span_symbol_header">' + data['symbol'] + '</span></i>';
+            document.querySelectorAll('.income_expense')[0].children[0].innerHTML = '<h4 class="smaller__header"><i>Income: ' + data['income'] + ' <span class="span_symbol_header">' + data['symbol']+'</span></i></h4>';
+            document.querySelectorAll('.income_expense')[1].children[0].innerHTML = '<h4 class="smaller__header"><i>Expense: ' + data['expense'] + ' <span class="span_symbol_header">' + data['symbol']+'</span></i></h4>';
             document.querySelectorAll('.list_of_transactions')[0].textContent="";
             document.querySelectorAll('.list_of_transactions')[1].textContent="";
             var ul_one, ul_two, li;
@@ -68,11 +66,11 @@
             document.querySelectorAll('.list_of_transactions')[1].appendChild(ul_two);
             for (i=0; i<data['income_transactions'].length; i++){
                 li = document.createElement('li');
-                li.innerHTML = '<span class="span_category">'+data['income_transactions'][i][0]+'</span><span class="span_money">'+data['income_transactions'][i][1]+'$</span>';
+                li.innerHTML = '<span class="span_category">'+data['income_transactions'][i][0]+'</span><span class="span_money">'+data['income_transactions'][i][1]+ ' <span class="span_symbol">' + data['symbol']+'</span></span>';
                 document.querySelectorAll('.list_of_transactions')[0].children[0].appendChild(li);            }
             for (i=0; i<data['expense_transactions'].length; i++){
                 li = document.createElement('li');
-                li.innerHTML = '<span class="span_category">'+data['expense_transactions'][i][0]+'</span><span class="span_money">'+data['expense_transactions'][i][1]+'$</span>';
+                li.innerHTML = '<span class="span_category">'+data['expense_transactions'][i][0]+'</span><span class="span_money">'+data['expense_transactions'][i][1]+' <span class="span_symbol">' + data['symbol']+'</span></span>';
                 document.querySelectorAll('.list_of_transactions')[1].children[0].appendChild(li);            }
         }
       });

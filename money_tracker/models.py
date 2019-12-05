@@ -51,3 +51,11 @@ class Transaction(models.Model):
             self.created = timezone.now()
         self.modified = timezone.now()
         return super(Transaction, self).save(*args, **kwargs)
+
+
+class Currency(models.Model):
+    name = models.CharField(max_length=32, verbose_name=_('Currency name'))
+    symbol = models.CharField(max_length=16, verbose_name=_('Currency symbol'))
+
+    def __str__(self):
+        return f'{self.name} - {self.symbol}'

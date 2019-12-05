@@ -6,7 +6,6 @@
 
 body {
     font-size: 1.6rem;
-    color: black;
     background-image: linear-gradient(to right, rgba(9,48,40, 0.85), rgba(35,122,87, 0.85)), url(background.jpg);
     background-size: cover;
     color: white;
@@ -54,6 +53,10 @@ html {
     animation: moveInDown 1s ease-out;
 }
 
+select.form-control:not([size]):not([multiple]) {
+  height: auto!important;
+}
+
 .navigation{
     position: fixed;
     top: 0;
@@ -65,14 +68,14 @@ html {
 }
 
 .navigation_list{
-   margin-top: 20%;
+   margin-top: 30%;
    list-style-type: none;
 }
 
 .navigation_item{
     padding-left: 10%;
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding-top: 7%;
+    padding-bottom: 7%;
     color: black;
 }
 
@@ -104,13 +107,13 @@ html {
     float: left;
     width: 50%;
     text-align: center;
-    margin-top: 3rem;
+    margin-top: 5rem;
     padding-bottom: 100%;
     margin-bottom: -100%;
 }
 
 .balance__sheet{
-    width: 70%;
+    width: 85%;
     margin: 5% auto 0 auto;
     overflow: hidden;
 }
@@ -123,8 +126,7 @@ html {
 }
 
 .add_transaction{
-    float: left;
-    text-align: center;
+    margin: 0 auto;
     width: 50%;
 }
 
@@ -135,20 +137,36 @@ html {
 .span_money{
     float: right;
     padding-right: 11%;
-    font-weight: 700;
     text-align: right;
 }
 
+.span_money_right{
+    float: right;
+    text-align: right;
+}
+
+.span_date{
+    font-size: 1.3rem;
+}
+
+.span_symbol{
+    font-size: 1rem;
+}
+
+.span_symbol_header{
+    font-size: 1.3rem;
+}
+
 .img_transaction{
-    width:10%;
+    width:1.4rem;
     margin-bottom: .3rem;
-    margin-left: .5rem;
+    margin-left: .3rem;
 }
 
 ul.errorlist {display:none;}
 
 .button{
-    width: 13vw;
+    width: 17rem;
     padding: 0.7rem;
     border: 1px solid #666;
     border-radius: 100px;
@@ -156,6 +174,7 @@ ul.errorlist {display:none;}
     animation: all .5s ease-out;
     background: #fff;
     color: #666;
+    margin-top: 1rem;
 }
 
 .button:hover{
@@ -212,4 +231,119 @@ form{
 		 opacity: 1;
 		 transform: translateY(0);
 	 }
+}
+
+
+@media screen and (max-width: 1000px){
+
+    .navigation{
+        width: 100%;
+        height: auto;
+    }
+
+    .navigation_list{
+        margin-top: 0;
+        margin-bottom: 0;
+        text-align: center;
+    }
+
+    .navigation_item{
+        float: left;
+        padding-top: 2vh;
+        padding-bottom: 2vh;
+        padding-left: 0;
+        width: 20%;
+
+    }
+    .clear_float{
+        clear: both;
+    }
+
+    .form_section{
+        margin-top: 10%;
+    }
+
+    .section{
+        width: 100%;
+        margin-top: 10rem;
+        margin-left: 0;
+    }
+
+    .form_section{
+        margin: 10rem auto;
+        width: 50%
+    }
+
+    .balance__sheet{
+        width: 92%;
+    }
+
+    .list_of_transactions{
+        font-size: 1.5rem;
+    }
+
+    .span_date{
+        font-size: 1.2rem;
+    }
+
+    .img_transaction{
+        width:1.2rem;
+        margin-bottom: .3rem;
+        margin-left: .25rem;
+    }
+    .button{
+        width: 14rem;
+    }
+
+}
+
+
+@media screen and (max-width: 715px){
+    .income_expense{
+        float: none;
+        width: 80%;
+        margin: 5rem auto;
+        padding: 0;
+    }
+
+    .button{
+        width: 13rem;
+    }
+    .form_section{
+        width: 60%;
+    }
+
+}
+
+@media screen and (max-width: 500px){
+    body{
+        font-size: 1rem;
+    }
+    .header{
+        font-size: 2.4rem;
+    }
+
+    .smaller__header{
+        font-size: 1.5rem;
+    }
+
+    .list_of_transactions{
+        font-size: 1rem;
+    }
+    .form_section, .section{
+        margin-top: 8rem;
+    }
+    .income_expense{
+        margin: 2.5rem auto;
+    }
+    .span_date{
+        font-size: .8rem;
+    }
+    .span_symbol{
+        font-size: .6rem;
+    }
+    .img_transaction{
+        width: 1rem;
+    }
+
 }

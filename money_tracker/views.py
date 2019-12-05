@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, ListView, DeleteView, UpdateView
 
+from accounts.models import CustomUser
 from money_tracker.forms import UserCategoryForm, UserTransactionForm
 from money_tracker.models import Category, Transaction
 from money_tracker.scripts import range_of_current_month, month_name_to_number
@@ -70,6 +71,7 @@ class BalanceView(LoginRequiredMixin, TemplateView):
         context['balance'] = income - expense
         context['month'] = month
         context['year'] = year
+        context['symbol'] = self.request.user.currency.symbol
         context['income_transaction'] = [[income_trans['category__name'], round(income_trans['sum_transactions'], 2)] for income_trans in income_transactions]
         context['expense_transaction'] = [[expense_trans['category__name'], round(expense_trans['sum_transactions'], 2)] for expense_trans in expense_transactions]
         return context
@@ -167,6 +169,7 @@ class TransactionsView(LoginRequiredMixin, TemplateView):
         context['balance'] = income - expense
         context['month'] = month
         context['year'] = year
+        context['symbol'] = self.request.user.currency.symbol
         context['income_transaction'] = income_transactions
         context['expense_transaction'] = expense_transactions
         return context
@@ -199,6 +202,7 @@ def check_balance(request):
         'balance': income - expense,
         'income': income,
         'expense': expense,
+        'symbol': request.user.currency.symbol,
         'income_transactions': income_transactions,
         'expense_transactions': expense_transactions
     }
@@ -233,6 +237,7 @@ def check_transactions(request):
         'balance': income - expense,
         'income': income,
         'expense': expense,
+        'symbol': request.user.currency.symbol,
         'income_transactions': income_transactions,
         'expense_transactions': expense_transactions,
         'url_update_expense_list': url_update_expense_list,

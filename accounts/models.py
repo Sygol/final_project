@@ -6,6 +6,7 @@ from django.utils import timezone
 
 
 class CustomUser(AbstractUser):
+    currency = models.ForeignKey('money_tracker.Currency', related_name='users', on_delete=models.CASCADE, blank=True, null=True)
     created = models.DateTimeField(editable=False, default=timezone.now())
     modified = models.DateTimeField(default=timezone.now())
 
